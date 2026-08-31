@@ -1,0 +1,39 @@
+{
+  "name": "accessibility-auditor-backend",
+  "version": "1.0.0",
+  "description": "Backend API for the AI-Powered Digital Accessibility Auditor - auth, Playwright-based web crawler, and dashboard endpoints",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "seed": "node src/data/seed.js",
+    "playwright:install": "playwright install --with-deps chromium"
+  },
+  "keywords": [
+    "accessibility",
+    "wcag",
+    "mern",
+    "playwright"
+  ],
+  "author": "",
+  "license": "ISC",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "dependencies": {
+    "@axe-core/playwright": "^4.13.0",
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "express-validator": "^7.3.2",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.9.4",
+    "morgan": "^1.11.0",
+    "playwright": "^1.62.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
