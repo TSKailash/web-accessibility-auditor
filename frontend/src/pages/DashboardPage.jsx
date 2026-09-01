@@ -30,9 +30,9 @@ export default function DashboardPage() {
 
         if (cancelled) return;
         setOverview(overviewRes.data);
-        setWebsites(websitesRes.data.websites);
-        setCriteria(criteriaRes.data.criteria);
-        setIssues(issuesRes.data.issues);
+        setWebsites(websitesRes.data.websites || []);
+        setCriteria(criteriaRes.data.criteria || []);
+        setIssues(issuesRes.data.issues || []);
         setComparison(comparisonRes.data);
       } catch {
         if (!cancelled) setError("Couldn't load dashboard data. Is the backend running?");
@@ -41,9 +41,17 @@ export default function DashboardPage() {
       }
     }
 
+    const handleScanUpdated = () => {
+      setLoading(true);
+      loadDashboard();
+    };
+
     loadDashboard();
+    window.addEventListener("scan:updated", handleScanUpdated);
+
     return () => {
       cancelled = true;
+      window.removeEventListener("scan:updated", handleScanUpdated);
     };
   }, []);
 
@@ -57,7 +65,6 @@ export default function DashboardPage() {
 
   return (
     <div className="reveal">
-      {/* Page header */}
       <div className="page-header">
         <div>
           <p className="eyebrow" style={{ marginBottom: '8px' }}>Workspace overview</p>
@@ -69,7 +76,6 @@ export default function DashboardPage() {
         <div className="text-mono text-xs text-muted">Updated just now</div>
       </div>
 
-      {/* Stat cards */}
       <div className="grid-stats">
         <StatCard label="Websites tracked" value={overview.totalWebsites} icon={Globe2} />
         <StatCard label="Total scans run" value={overview.totalScans} icon={ScanLine} />
@@ -77,7 +83,6 @@ export default function DashboardPage() {
         <StatCard label="WCAG criteria tracked" value={overview.criteriaTracked} icon={ListChecks} />
       </div>
 
-      {/* Websites + Score ring */}
       <div className="grid-main">
         <div className="panel">
           <div className="panel-header">
@@ -114,16 +119,14 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        {/* Score ring for the top site */}
         <div className="panel" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '20px' }}>
           <h2 className="heading-section" style={{ alignSelf: 'flex-start', marginBottom: '16px' }}>
-            Latest score — {websites[0]?.name}
+            Latest score — {websites[0]?.name || 'No website'}
           </h2>
           <ScoreRing score={websites[0]?.latestScore ?? 0} />
         </div>
       </div>
 
-      {/* Criteria breakdown + Improvement */}
       <div className="grid-main" style={{ marginTop: '24px' }}>
         <div className="panel">
           <div className="panel-header">
@@ -155,7 +158,6 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        {/* Improvement comparison */}
         <div className="panel" style={{ padding: '20px' }}>
           <h2 className="heading-section" style={{ marginBottom: '16px' }}>Improvement</h2>
           {comparison ? (
@@ -163,7 +165,7 @@ export default function DashboardPage() {
               <div className="improvement-row">
                 <span className="improvement-label">Score change</span>
                 <span className="improvement-value improvement-value--good">
-                  +{comparison.scoreImprovement}
+                  {comparison.scoreImprovement >= 0 ? "+" : ""}{comparison.scoreImprovement}
                 </span>
               </div>
               <div className="improvement-row">
@@ -180,7 +182,6 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* Recent issues */}
       <div className="panel" style={{ marginTop: '24px' }}>
         <div className="panel-header">
           <div className="panel-header-row">
