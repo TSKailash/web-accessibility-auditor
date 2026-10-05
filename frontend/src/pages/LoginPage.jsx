@@ -64,12 +64,12 @@ export default function LoginPage() {
         </div>
 
         <button type="submit" disabled={submitting} className="btn-primary">
-          {submitting ? "Logging in\u2026" : "Log in"}
+          {submitting ? "Logging in.." : "Log in"}
         </button>
       </form>
 
       <p className="auth-footer-text">
-        Don\u2019t have an account?{" "}
+        Don't have an account?{" "}
         <Link to="/register">Create one</Link>
       </p>
     </AuthShell>
