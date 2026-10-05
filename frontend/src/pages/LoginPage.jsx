@@ -69,7 +69,7 @@ export default function LoginPage() {
       </form>
 
       <p className="auth-footer-text">
-        Don\u2019t have an account?{" "}
+        Don't have an account?{" "}
         <Link to="/register">Create one</Link>
       </p>
     </AuthShell>

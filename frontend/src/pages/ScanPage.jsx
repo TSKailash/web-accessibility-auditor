@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { ScanSearch, Loader2, ArrowLeft } from "lucide-react";
 import axiosClient from "../api/axiosClient.js";
 import SeverityBadge from "../components/SeverityBadge.jsx";
 import ScoreRing from "../components/ScoreRing.jsx";
 
 export default function ScanPage() {
+  const location = useLocation();
   const [url, setUrl] = useState("");
   const [scanning, setScanning] = useState(false);
   const [error, setError] = useState("");
@@ -13,11 +15,18 @@ export default function ScanPage() {
   const [showIssues, setShowIssues] = useState(false);
 
   useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const presetUrl = params.get("url");
+
+    if (presetUrl) {
+      setUrl(presetUrl);
+    }
+
     axiosClient
       .get("/scans/criteria")
       .then((res) => setCriteria(res.data.criteria))
       .catch(() => setCriteria([]));
-  }, []);
+  }, [location.search]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

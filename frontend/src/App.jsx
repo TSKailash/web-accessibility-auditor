@@ -6,6 +6,7 @@ import LoginPage from "./pages/LoginPage.jsx";
 import RegisterPage from "./pages/RegisterPage.jsx";
 import DashboardPage from "./pages/DashboardPage.jsx";
 import ScanPage from "./pages/ScanPage.jsx";
+import HistoryPage from "./pages/HistoryPage.jsx";
 import NotFoundPage from "./pages/NotFoundPage.jsx";
 
 export default function App() {
@@ -26,6 +27,7 @@ export default function App() {
         >
           <Route index element={<DashboardPage />} />
           <Route path="scan" element={<ScanPage />} />
+          <Route path="history" element={<HistoryPage />} />
         </Route>
 
         <Route path="*" element={<NotFoundPage />} />

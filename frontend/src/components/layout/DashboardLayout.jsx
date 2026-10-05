@@ -1,10 +1,11 @@
 import { NavLink, Outlet } from "react-router-dom";
-import { LayoutDashboard, ScanSearch, LogOut, ShieldCheck } from "lucide-react";
+import { LayoutDashboard, ScanSearch, LogOut, ShieldCheck, History } from "lucide-react";
 import { useAuth } from "../../context/AuthContext.jsx";
 
 const NAV_ITEMS = [
   { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard, end: true },
   { to: "/dashboard/scan", label: "New Scan", icon: ScanSearch },
+  { to: "/dashboard/history", label: "History", icon: History },
 ];
 
 export default function DashboardLayout() {
